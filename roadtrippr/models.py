@@ -28,25 +28,3 @@ class Waypoint(models.Model):
 
     def __str__(self):
         return self.location
-
-    def insertBefore(self, w):
-        ## needs to handle null
-        prev = self.previous_waypoint
-        self.previous_waypoint = w
-        prev.next_waypoint = w
-        w.previous_waypoint = prev
-        w.next_waypoint = self
-        prev.save()
-        self.save()
-        w.save()
-
-    def insertAfter(self, w):
-        ## needs to handle null
-        nextw = self.next_waypoint
-        self.next_waypoint = w
-        nextw.prev_waypoint = w
-        w.previous_waypoint = self
-        w.next_waypoint = nextw
-        nextw.save()
-        self.save()
-        w.save()
