@@ -106,10 +106,16 @@ SOCIAL_AUTH_GITHUB_SECRET = GITHUB_CLIENT_SECRET
 
 AUTHENTICATION_BACKENDS = (
     'social.backends.github.GithubOAuth2',
+    'social.backends.facebook.FacebookOAuth2',
+    'social.backends.foursquare.FoursquareOAuth2',
+    'social.backends.tumblr.TumblrOAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/login/github/'
+LOGIN_URL = '/login/'
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {}
