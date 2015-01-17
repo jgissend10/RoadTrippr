@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'social.apps.django_app.default',
     'roadtrippr',
+    'rest_framework',
 )
 
 SITE_ID=1
