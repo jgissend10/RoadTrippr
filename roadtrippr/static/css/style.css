@@ -1,0 +1,135 @@
+a{
+	float: left;
+	clear: left;
+}
+
+canvas{
+	background-color: #AD0000;
+}
+
+body{
+	margin-top: 595px;
+	background-color: #ddd;
+	margin: 0px;
+}
+.edit{
+	float: right;
+	cursor: pointer;
+	color: gray;
+	padding: 1px;
+}
+.del{
+	float: right;
+	cursor: pointer;
+	color: gray;
+	padding: 1px;
+}
+.del:hover{
+	color: black;
+}
+.edit:hover{
+	color: black;
+}
+
+#screen{
+	position: absolute;
+	top: 0px;
+	overflow: hidden;
+}
+#editTextArea{
+	width: 1200px;
+	height: 600px;
+	overflow: hidden;
+}
+#editActions{
+	font-size: large;
+	height: 20px;
+}
+#editCode{
+	position: absolute;
+	bottom: 0px;
+	
+	right: 0px;
+
+	
+	background-color: lightgray;
+}
+#bar {
+	position: absolute;
+	top: 0px;
+	
+	right: 0px;
+	width: 200px;
+	background-color: lightgray;
+}
+
+#bar span:hover{
+	background-color: lightgray;
+}
+#bar span{
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+
+#bar li{
+	padding-left: 15px;
+	padding-right: 5px;
+	width:100%;
+}
+.notActiveScene {
+	border-left: 7px solid #DDD;;
+}
+.activeScene {
+	border-left: 7px solid RED;
+}
+
+#bar li:hover{
+	background-color: lightgray;
+	cursor: ns-resize;
+}
+#bar ul{
+	list-style-type: none;
+	margin:0px;
+	padding: 0px;
+
+}
+#done {
+	background-color: red;
+	width: 100%;
+	height: 5px;
+	position: inherit;
+	float: top;
+	right: 0px;
+}
+
+#barActions{
+	margin-top:5px;
+	padding:5px;
+	padding-top:3px;
+	font-size: large;
+	height: 30px;
+	background-color: white;
+	border-bottom: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+}
+
+#barList{
+	float: left;
+	overflow: hidden;
+	background-color: #EEEEEE;
+	width: 100%;
+}
+.hide{
+	display: none;
+}
+.left{
+	float: left;
+}
+
+.right{
+	float: right;
+}

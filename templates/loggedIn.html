@@ -1,0 +1,92 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>You logged-in</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/bootstrapthin.css" rel="stylesheet">
+    <script src="/static/js/jquery.js"></script>
+    <style>
+    .notThere{
+      text-align: center;
+      opacity: 0.3;
+      -webkit-user-select: none;  /* Chrome all / Safari all */
+      -moz-user-select: none;     /* Firefox all */
+      -ms-user-select: none;      /* IE 10+ */
+
+      /* No support for these yet, use at own risk */
+      -o-user-select: none;
+      user-select: none; 
+      
+    }
+   </style>
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active"><a href="/">Home</a></li>
+            <li role="presentation"><a href="/logout">Log-off</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">RoadTrippr</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Hello {{ user.first_name }}</h1>
+      </div>
+      <h2>RoadTrippr! </h2>
+      <div id="table_location" >
+        
+        <div class="col-lg-4">
+         
+          <h2>Create</h2>
+          <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+          <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+      
+          <h2>a</h2>
+          <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
+          <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+         
+          <h2>Trip!!!</h2>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+        </div><!-- /.col-lg-4 -->
+      </div>
+      <script src="/static/js/jar.js"></script>
+      {% if jars %}<script>
+        
+        
+         $.getJSON( SITE_URL+"/api/jars", function( data ) {
+            //data = data.data;
+            buildjarlist(document.getElementById('table_location'), data);
+            
+        
+            //if(document.querySelector('.getUserInfo') !=null)
+
+         });
+      </script>{% else %}{% endif %}
+      <footer class="footer">
+        <p>© cool dudes Roadtrippr</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+
+
+  
+
+</body></html>

@@ -1,0 +1,96 @@
+table{font-family:monospace;font-size: 16px;}
+    tr:nth-child(even){
+      background-color: #FFF;
+    }
+    tr:nth-child(odd){
+      background-color: #F9f9f9;
+    }
+    .table_count{
+      border-right: 1px solid #000;
+      min-width: 40px;
+      padding-left: 5px;
+    }
+
+    .table_line{
+      
+      padding-left: 5px;
+      width: 870px;
+    }
+    .added {
+      background-color: #7A85AD;
+
+    }
+    .hide{
+      display:none;
+    }
+    .myform{
+      position: absolute;
+width: 600px;
+/* height: 600px; */
+top: 50px;
+left: 50%;
+margin-left: -300px;
+background-color: lightgrey;
+padding: 15px;
+    }
+    .select {
+      background-color: #7FBF90;
+
+    }
+    .table_path{
+      padding-left: 5px;
+      width: 435px
+
+    }
+    .table_type{
+      padding-left: 5px;
+      width: 435px;
+      
+    }
+    .info_button{
+      padding: 5px;
+      margin: 5px;
+      width: 150px;
+    }
+
+    #table_info{
+      
+      position: fixed;
+      left: 1080px;
+      top: 100px;
+      width: 200px;
+      height: 400px;
+      background-color: #fffbf7;
+      padding: 10px;
+      border-top: 5px solid #07123A;
+    }
+    #table_info > h3{
+      color: #07123A;
+      margin-top: 0px;
+    }
+    table{
+      -webkit-user-select: none;  /* Chrome all / Safari all */
+      -moz-user-select: none;     /* Firefox all */
+      -ms-user-select: none;      /* IE 10+ */
+
+      /* No support for these yet, use at own risk */
+      -o-user-select: none;
+      user-select: none; 
+    }
+    tr:hover{
+       background-color: #eee;
+
+    }
+
+    .notThere{
+      text-align: center;
+      opacity: 0.3;
+      -webkit-user-select: none;  /* Chrome all / Safari all */
+      -moz-user-select: none;     /* Firefox all */
+      -ms-user-select: none;      /* IE 10+ */
+
+      /* No support for these yet, use at own risk */
+      -o-user-select: none;
+      user-select: none; 
+      
+    }
