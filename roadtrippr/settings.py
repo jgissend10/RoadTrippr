@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'social.apps.django_app.default',
+    'roadtrippr',
 )
 
 SITE_ID=1
