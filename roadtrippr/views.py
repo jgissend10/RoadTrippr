@@ -14,7 +14,7 @@ from models import Trip, Waypoint
 
 def home(request):
     if request.user.is_authenticated():
-        return render_to_response('loggedIn.html', {'user': request.user})
+        return render_to_response('maptest/index.html', {'user': request.user})
     else:
         return render_to_response('login.html')
 
