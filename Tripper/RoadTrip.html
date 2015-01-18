@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html ng-app="roadTrip">
+  <head>
+  	 <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> 
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/road.css"/>
+    <link rel="stylesheet" type="text/css" href="css/simple-sidebar.css"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>  
+    <script type="text/javascript" src="js/ui-bootstrap-tpls-0.12.0.min.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>    
+    <script type="text/javascript" src="js/roadTrip.js"></script>
+
+  </head>
+  <body>
+  	<div id="wrapper">
+  		<div id="sidebar-wrapper">
+    <h1>Test</h1>
+    <section class="tab" ng-controller = "TabController as tab"> 
+    	<ul class="nav nav-pills">
+    		<li ng-class = "{active:tab.isSet(1)}">
+    			<a href ng-click="tab.setTab(1)">Welcome!</a></li>
+    		<li ng-class = "{active:tab.isSet(2)}">
+    			<a href ng-click="tab.setTab(2)">Trip Details</a></li>
+            <li ng-class = "{active: tab.isSet(3)}"> 
+                <a href ng-click="tab.setTab(3)">waypoints</a></li>
+    	</ul>
+    	<div ng-show="tab.isSet(1)">
+    		<h4>New user? SignUP!</h4>
+            <fieldset class="form-group">
+                <input type="text" class="form-control" placeholder = "Enter a Username" name = "username"/>
+            </fieldset>
+            <fieldset class="form-group">
+                <input type="email" class="form-control" placeholder = "Enter an Email" name ="email"/>
+            </fieldset>
+            <input type="button" onclick="alert('Hello World!')" value="Sign UP!">
+            <br>
+            <br>
+            <h4>Not New? Login!</h4>
+            <fieldset class="form-group">
+                <input type="text" class="form-control" placeholder = "Enter a Username" name = "username"/>
+            </fieldset>
+            <fieldset class="form-group">
+                <input type="email" class="form-control" placeholder = "Enter an Email" name ="email"/>
+            </fieldset>
+            <input type="button" onclick="alert('Hello World!')" value="Login!">
+
+    	</div>
+        <div ng-show="tab.isSet(2)">
+            <h4>Plan a Trip!</h4>
+            <form id ="trip" name="trip" method="post" >
+            <fieldset class="form-group">
+                <input id="start_location" type="Text" class="form-control" placeholder ="Enter A start Location!" title ="Start Location" name = "start_location" />
+            </fieldset>
+            <fieldset class="form-group">
+                <input  type="Text"  name="end_location"  id = "end_location"class="form-control" placeholder ="Enter A Destination!" title ="End Location"/>
+            </fieldset>
+            <!-- <h4>Pick a Time!</h4>
+            <fieldset class="form-group">
+                    <input type="time" name="start_time">
+            </fieldset> -->
+            <fieldset>
+                <h4>Pick a Date!</h4>
+                <input  type="datetime-local" name="start_datetime" id = "start_datetime" placeholder ="">
+            </fieldset>
+            <fieldset class="form-group">
+                <h4>Max drive time?</h4>
+                <input  type= "number" class ="form-control" name = "drive_time" placeholder = "8" min ="1">
+            </fieldset>
+            <<!-- fieldset class="form-group">
+                <h4>How many People?</h4>
+                <input type="number" class ="form-control" name = "peps" placeholder = "1" min ="1">
+            </fieldset> -->
+            <fieldset class="form-group">
+                <h4>StartTime?</h4>
+                 <input type="time" name="start_day_time">
+            </fieldset>
+            <fieldset class="form-group">
+                <h4>LunchTime?</h4>
+                <input type="time" name="lunch_time">
+            </fieldset>
+            <fieldset class="form-group">
+                <h4>DinnerTime?</h4>
+                <input type="time" name="dinner_time">
+            </fieldset>
+            <fieldset class = "form-group">
+                    <input id="trip_submit" type="submit" class="btn btn-primary pull-right" value="Submit Trip" onclick="doPost()" />
+            </fieldset>
+            </form>
+
+        </div>
+    	<div ng-show="tab.isSet(3)">
+            <form name = "waypoint"  >
+    		<h4>Waypoints</h4>
+            <fieldset class="form-group">
+                <input type="Text" class="form-control" placeholder ="Enter in a Waypoint!" title="location"/>
+            </fieldset>
+            <fieldset class="form-group">
+                <h4>Arrival time?</h4>
+            </fieldset>
+            <fieldset class="form-group">
+                <h4>Departure time?</h4>
+            </fieldset>
+            <fieldset class = "form-group">
+                    <input type="submit" class="btn btn-primary pull-right" value="Add wayPoint"/>
+            </fieldset>
+    	</div>
+    	
+        
+    </section>
+</div>
+
+</div>
+  </body>
+</html>
