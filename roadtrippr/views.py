@@ -23,3 +23,9 @@ def logout_view(request):
     logout(request)
     return redirect('/')
 
+def user_json(request):
+    if request.user.is_authenticated():
+        data = {'pk': request.user.pk}
+    else:
+        data = {'pk': 0}
+    return HttpResponse(json.dumps(data), content_type='application/json')

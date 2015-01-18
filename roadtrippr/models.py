@@ -28,3 +28,8 @@ class Waypoint(models.Model):
 
     def __str__(self):
         return self.location
+
+class GasStation(models.Model):
+    name = models.CharField(max_length=255)
+    location = models.CharField(max_length=255)
+    price = models.CharField(max_length=7)
