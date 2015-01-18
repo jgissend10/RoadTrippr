@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<style>
+   .overlay{
+  display:block;
+  text-align:center;
+  color:#fff;
+  font-size:40px;
+  line-height:60px;
+  opacity:0.8;
+  background:#888;
+  border-radius:4px;
+
+  padding:0 4px;
+}
+.overlaysub{
+
+  font-size:14px;
+  line-height:20px;
+}
+</style>
+	<title>s</title>
+	
+	<!-- Bootstrap core CSS
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet"> -->
+  <script src="js/jquery.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places"></script>
+	<script src="js/gmaps.js"></script>
+
+</script>
+  <script>
+    var map;
+    var oldlatlng;
+    var day = 1;
+   // var timeCount = 0;
+    var lastPlacedMarker = null;
+    var bound = new google.maps.LatLngBounds();
+    var points = new Array();
+    var directions = new Array();
+    var markers = [];
+    $( document ).ready(function() {
+        map = new GMaps({
+          div: '#map',
+          lat: 38.2526647,
+          lng: -85.75845570000001
+        });
+        var input = document.getElementById('address');
+        var options = {
+           types: ['geocode'],
+           componentRestrictions: {country: 'us'}
+        };        
+        var autocomplete = new google.maps.places.Autocomplete(input,options);
+        autocomplete.bindTo('bounds', map);
+    
+        $( "#geocoding_form" ).submit(function( event ) {
+        event.preventDefault();
+             GMaps.geocode({
+              address: $('#address').val(),
+              callback: function(results, status) {
+                if (status == 'OK') {
+                  var activelatlng = results[0].geometry.location;
+                  bound.extend( activelatlng);
+                  points[points.length] = results[0];
+                  if(points.length>1){
+                    directions[directions.length] = new Array();
+                    map.travelRoute({
+                        origin: [points[points.length-2].geometry.location.lat(), points[points.length-2].geometry.location.lng()],
+                        destination: [points[points.length-1].geometry.location.lat(), points[points.length-1].geometry.location.lng()],
+                        travelMode: 'driving',
+                        step: function(e) {
+                          directions[directions.length-1][directions[directions.length-1].length] = e;
+                          
+                        } ,
+                        end: function(e){
+                          drawEverythingAgain();
+                        }
+                    }); 
+                  }
+                  else
+                    drawEverythingAgain();
+                }
+              }
+            });
+          });
+     });
+
+     function drawEverythingAgain(){//FUCK IT
+        //clearOverlays();
+
+        map.removeOverlays();
+        map.cleanRoute();
+        day = 1;
+        for(var i =0;i< points.length;i++){
+          var activelatlng = points[i].geometry.location;
+          map.addMarker({
+              lat: activelatlng.lat(),
+              lng: activelatlng.lng(),
+              click: function(e) {
+                
+              },
+              infoWindow: {
+                content: '<p>'+points[i].formatted_address+'</p>'
+              }
+            });
+          if(i!=0){
+            var timeCount =0;
+        
+            for(var x=0;x<directions[i-1].length;x++){
+
+              var e = directions[i-1][x];
+              timeCount += e.duration.value;
+              if(9*60*60<timeCount){
+                  var step_dis = e.distance.value;
+                  var step_dur = e.duration.value;
+                  var dur_over = timeCount - 9*60*60;
+                  var dis_count = 0;
+                  var added = false;
+                  for(var y =1;y<e.lat_lngs.length;y++){
+                    var dis = google.maps.geometry.spherical.computeDistanceBetween(e.lat_lngs[y-1],e.lat_lngs[y]);
+                      dis_count += dis;
+                      if(dis_count > step_dis*(dur_over/step_dur)){
+                        var idk = ((dis_count)-(step_dis*dur_over/step_dur))/dis_count;
+                         activelatlng = new google.maps.LatLng(e.lat_lngs[y-1].k, e.lat_lngs[y-1].D);
+                         //timeCount = timeCount-(e.duration.value*(dis_count/step_dis));
+                        map.drawOverlay({
+                          lat: (e.lat_lngs[y-1].k + oldlatlng.lat())/2,
+                          lng: (e.lat_lngs[y-1].D+ oldlatlng.lng())/2,
+                          
+                          content: '<div class="overlay">Day '+day+'<div class="overlaysub">'+parseInt(timeCount/(60*60.0))+' hours '+parseInt(timeCount/3600%(60)/60.0*60) +' min</div></div>'
+                        });
+                          day++;
+                        //********IMPORTANT GPS DATA. use to check for hotels. 
+                        map.addMarker({
+                          lat: e.lat_lngs[y-1].k,
+                          lng: e.lat_lngs[y-1].D,
+                          click: function(e) {
+                            
+                          },
+                          infoWindow: {
+                            content: '<p>Pitstop</p>'
+                          }
+                        });
+                        map.drawRoute({
+                          origin: [oldlatlng.lat(), oldlatlng.lng()],
+                          destination: [activelatlng.lat(), activelatlng.lng()],
+                          travelMode: 'driving',
+                          strokeColor: '#131540',
+                          strokeOpacity: 0.5,
+                          strokeWeight: 6
+                        });
+                        oldlatlng = activelatlng;
+                        activelatlng = points[i].geometry.location;
+                        
+                        timeCount = 0;
+                        break;
+                      }
+
+                  }
+                  
+                  
+
+              }
+            }
+              
+            map.drawOverlay({
+              lat: (activelatlng.lat() + oldlatlng.lat())/2,
+              lng: (activelatlng.lng()+ oldlatlng.lng())/2,
+              content: '<div class="overlay">Day '+day+'<div class="overlaysub">'+parseInt(timeCount/(60*60))+' hours '+parseInt(timeCount/3600%(60)/60.0*60) +' min</div></div>'
+            });
+            day++;
+            map.drawRoute({
+              origin: [oldlatlng.lat(), oldlatlng.lng()],
+              destination: [activelatlng.lat(), activelatlng.lng()],
+              travelMode: 'driving',
+              strokeColor: '#131540',
+              strokeOpacity: 0.5,
+              strokeWeight: 6
+            });
+
+          }        
+
+          oldlatlng = activelatlng;
+        }
+        map.setCenter(bound.getCenter().lat(), bound.getCenter().lng());
+        map.setZoom( getBoundsZoomLevel(bound, { height: 1600, width: 700 }) );
+        
+       
+    }
+
+    function getBoundsZoomLevel(bounds, mapDim) {
+        var WORLD_DIM = { height: 256, width: 256 };
+        var ZOOM_MAX = 14;
+
+        function latRad(lat) {
+            var sin = Math.sin(lat * Math.PI / 180);
+            var radX2 = Math.log((1 + sin) / (1 - sin)) / 2;
+            return Math.max(Math.min(radX2, Math.PI), -Math.PI) / 2;
+        }
+
+        function zoom(mapPx, worldPx, fraction) {
+            return Math.floor(Math.log(mapPx / worldPx / fraction) / Math.LN2);
+        }
+
+        var ne = bounds.getNorthEast();
+        var sw = bounds.getSouthWest();
+
+        var latFraction = (latRad(ne.lat()) - latRad(sw.lat())) / Math.PI;
+
+        var lngDiff = ne.lng() - sw.lng();
+        var lngFraction = ((lngDiff < 0) ? (lngDiff + 360) : lngDiff) / 360;
+
+        var latZoom = zoom(mapDim.height, WORLD_DIM.height, latFraction);
+        var lngZoom = zoom(mapDim.width, WORLD_DIM.width, lngFraction);
+
+        return Math.min(latZoom, lngZoom, ZOOM_MAX);
+    }
+  </script>
+  </head>
+
+  <body>
+<div class="span11">
+        <form method="post" id="geocoding_form">
+          <label for="address">Address:</label>
+          <div class="input">
+            <input type="text" id="address" name="address" style="width: 500px">
+            <input type="submit" class="btn" value="Search">
+          </div>
+        </form>
+        <div id="">
+        </div>
+        <div id="map" style="height: 100vh;">
+        </div>
+      </div>
+  </body>
+</html>    
